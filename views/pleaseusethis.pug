@@ -1,0 +1,42 @@
+
+doctype html
+html
+  head
+    title ZAS Timestamp
+    link(rel='shortcut icon', href='data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAD///8Ai4sAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEREREREREREQAAAAAAAAARAREREREREBEBEREREREQEQERERERERARAREREREREBEBEREREREQEQERERERERARARERAAEREBEBEREBEREQEQEREQERERARARERAREREBEBEREBEREQEQERERERERARAAAAAAAAABEREREREREREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', type='image/x-icon')
+    link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet', type='text/css')
+    link(href='/public/main.css', rel='stylesheet', type='text/css')
+  body
+    .container
+      h1 A time stamp microservice
+      h3 Part 1 of Free Code Camp Backend Challenges
+    .explanation
+      h4 Is this in a proper format?
+      p= stampit
+      h4 Sadly no, look below for how to use this service
+      ul
+        li
+          code.bad DO not do this: #{stampit}
+        li
+          code DO do this: #{title}December 15 2015
+      ul
+        li You can pass a string as a parameter and if it contains a unix timestamp or a natural language date (example: January 1, 2016)
+          ol
+            li It returns both the Unix timestamp and the natural language form of that date.
+            li If it does not contain a date or Unix timestamp, it returns null for those properties.
+        li
+          h3 Example Input
+          ul
+            li
+              code  #{title}December%2015,%202015
+            li
+              code  #{title}1450137600
+            li
+              code  #{title}December 15, 2015
+            li
+              code  #{title}December 15 2015
+            li
+              code  #{title}December152015
+        li
+          h3 Example Output
+          code { "unix": 1450137600, "natural": "December 15, 2015" }
