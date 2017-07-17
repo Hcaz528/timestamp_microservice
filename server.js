@@ -71,7 +71,7 @@ function ripIt() {
 }
 
 app.get('/', function(req, res) {
-  res.render('index', {title: (req.protocol + 's://' + req.get('host') + req.originalUrl)});
+  res.render('index', {title: (req.protocol + 's://' + req.get('host') + '/')});
 });
 
 // This is the back bone for the time stamp service
@@ -79,23 +79,24 @@ app.get('/', function(req, res) {
 // url and converts it to UNIX and natural date to be displayed as a json
 app.get('/:stampit', function(req, res) {
   // Validate if the incoming stampit is in the valid format with REGEX
-  var strDates = (''+(req.params.stampit).match( /\D+/g )).replace(/\s+/g, '').replace(/\,/g, '');
   
-  if(months.indexOf(strDates) + 1) {  
-    var unix;
-  
-    if(!isNaN(req.params.stampit))
-      unix = sortDate(req.params.stampit,true);
-    else {
-      unix = ripIt(req.params.stampit, strDates);
-    }
-    
+  var unix;
+  if(!isNaN(req.params.stampit))
+  {
+    unix = sortDate(req.params.stampit,true);
     res.send(JSON.stringify(unix));
-    
-  } else {
-    // If the stampit is not in a valid format then they will be rerouted to the below
-    // res.send('Please use correctly formated date');
-    res.render('pleaseusethis', { stampit: req.params.stampit, title: (req.protocol + 's://' + req.get('host') + req.originalUrl) });
+  }
+  else {
+    var strDates = (''+(req.params.stampit).match( /\D+/g )).replace(/\s+/g, '').replace(/\,/g, '');
+
+    if(months.indexOf(strDates) + 1) {
+      unix = ripIt(req.params.stampit, strDates);
+      res.send(JSON.stringify(unix));
+    } else {
+      // If the stampit is not in a valid format then they will be rerouted to the below
+      // res.send('Please use correctly formated date');
+      res.render('pleaseusethis', { stampit: req.params.stampit, title: (req.protocol + 's://' + req.get('host') + '/') });
+    }
   }
 });
 
